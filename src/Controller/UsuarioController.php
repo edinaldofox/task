@@ -68,8 +68,9 @@ class UsuarioController extends ControllerConf implements ControllerProviderInte
             $sql = $app['db']->fetchAll('SELECT * FROM usuario');
 
             return $app["twig"]->render('Usuario/listar.twig', [
-                    'usuarios' => $sql
-                ]);
+                'tituloPainel' => 'Listagem de usuários',
+                'usuarios' => $sql
+            ]);
         });
 
         $controllers->get('/visualizar/{usuario}', function (Request $request) use ($app) {

@@ -2,6 +2,32 @@
 
 {% block body %}
 
-
+    {{ app.session.minhasTasks }}
+    <div class="row">
+        <div class="col-lg-12">
+            {% for task in tasks %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">Andamento: {{ task.nome }}</div>
+                    <div class="panel-body">
+                        <div class="progress">
+                            {% set andamento = '' %}
+                            {% if (task.andamento <= 25) %}
+                                {% set andamento = 'danger' %}
+                            {% elseif (task.andamento > 25 and task.andamento < 51) %}
+                                {% set andamento = 'warning' %}
+                            {% elseif (task.andamento > 50 and task.andamento < 76) %}
+                                {% set andamento = 'info' %}
+                            {% elseif (task.andamento > 75) %}
+                                {% set andamento = 'success' %}
+                            {% endif %}
+                            <div class="progress-bar progress-bar-{{ andamento }} progress-bar-striped active" title="{{ task.descricao }}" data-placement="top" role="progressbar" aria-valuenow="{{ task.andamento }}" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: {{ task.andamento }}%;">
+                                {{ task.andamento }} %
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 
 {% endblock %}

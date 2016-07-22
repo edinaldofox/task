@@ -5,6 +5,7 @@ require_once __DIR__.'/../vendor/autoload.php';
 use Controller\IndexController;
 use Controller\UsuarioController;
 use Controller\LoginController;
+use Controller\TaskController;
 
 $app = new Silex\Application();
 
@@ -13,6 +14,7 @@ $app
     ->register(new Silex\Provider\VarDumperServiceProvider())
     ->register(new Silex\Provider\SessionServiceProvider())
     ->register(new \Silex\Provider\FormServiceProvider())
+    ->register(new Silex\Provider\HttpFragmentServiceProvider())
     ->register(new Silex\Provider\AssetServiceProvider(), array(
         'assets.version' => 'v1',
         'assets.version_format' => '%s?version=%s',
@@ -32,6 +34,7 @@ $app
 $app->mount('/', new IndexController());
 $app->mount('/login', new LoginController());
 $app->mount('/usuario', new UsuarioController());
+$app->mount('/task', new TaskController());
 
 
 $app->run();

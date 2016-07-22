@@ -1,0 +1,47 @@
+<!-- /.dropdown -->
+<li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+        <i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-tasks">
+        {% for task in tasks %}
+            {% set andamento = '' %}
+            {% if (task.andamento <= 25) %}
+                {% set andamento = 'danger' %}
+            {% elseif (task.andamento > 25 and task.andamento < 51) %}
+                {% set andamento = 'warning' %}
+            {% elseif (task.andamento > 50 and task.andamento < 76) %}
+                {% set andamento = 'info' %}
+            {% elseif (task.andamento > 75) %}
+                {% set andamento = 'success' %}
+            {% endif %}
+            <li>
+                <a href="#">
+                    <div>
+                        <p>
+                            <strong>{{ task.nome }}</strong>
+                            <span class="pull-right text-muted">{{ task.andamento }}% Complete</span>
+                        </p>
+                        <div class="progress progress-striped active">
+                            <div class="progress-bar progress-bar-{{ andamento }}" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: {{ task.andamento }}%">
+                                <span class="sr-only">{{ task.andamento }}% Completo (sucesso)</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li class="divider"></li>
+        {% endfor %}
+
+        <li>
+            <a class="text-center" href="/task/listar">
+                <strong>Visualizar todas as Tasks</strong>
+                <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+    </ul>
+    <!-- /.dropdown-tasks -->
+</li>
+
+
+

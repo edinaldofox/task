@@ -1,0 +1,55 @@
+{% extends 'base.twig' %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="progress">
+                {% set andamento = '' %}
+                {% if (task.andamento <= 25) %}
+                    {% set andamento = 'danger' %}
+                {% elseif (task.andamento > 25 and task.andamento < 51) %}
+                    {% set andamento = 'warning' %}
+                {% elseif (task.andamento > 50 and task.andamento < 76) %}
+                    {% set andamento = 'info' %}
+                {% elseif (task.andamento > 75) %}
+                    {% set andamento = 'success' %}
+                {% endif %}
+                <div class="progress-bar progress-bar-{{ andamento }} progress-bar-striped active" title="{{ task.descricao }}" data-placement="top" role="progressbar" aria-valuenow="{{ task.andamento }}" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: {{ task.andamento }}%;">
+                    {{ task.andamento }} %
+                </div>
+            </div>
+
+            <form role="form" method="post" action="/usuario/editar">
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input name="nome" disabled="disabled" value="{{ task.nome }}" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="descricao">Descrição</label>
+                    <textarea id="descricao" disabled="disabled" class="form-control" name="descricao">{{ task.descricao }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Andamento</label>
+                    <input type="number" disabled="disabled" name="andamento" value="{{ task.andamento }}" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label>Usuário</label>
+                    <select name="usuario" disabled="disabled" class="form-control">
+                        <option>Selecione um usuário</option>
+                        {% for usuario in usuarios %}
+                            <option value="{{ usuario.id }}" {{ usuario.id == task.usuario? 'selected="selected"'}} >{{ usuario.nome }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <a href="/task/listar" class="btn btn-default">Voltar</a>
+                <a href="/task/editar/{{ task.id }}" class="btn btn-default">Editar</a>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
