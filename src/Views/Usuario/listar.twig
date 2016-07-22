@@ -22,6 +22,10 @@
                             <td>{{ usuario.email }}</td>
                             <td><a href="/usuario/visualizar/{{ usuario.id }}" class="btn btn-primary">Editar</a></td>
                         </tr>
+                    {% else %}
+                        <tr class="text-center" >
+                            <td colspan="4">Nenhum Usuário no momento.</td>
+                        </tr>
                     {% endfor %}
                     </tbody>
                 </table>

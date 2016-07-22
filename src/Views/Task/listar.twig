@@ -28,6 +28,10 @@
                                     <a href="/task/editar/{{ task.task_id }}" class="btn btn-success">Editar</a>
                                 </td>
                             </tr>
+                        {% else %}
+                            <tr class="text-center" >
+                                <td colspan="5">Nenhuma Task no momento.</td>
+                            </tr>
                         {% endfor %}
                         </tbody>
                     </table>
