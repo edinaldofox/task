@@ -35,8 +35,21 @@ class TaskController extends ControllerConf implements ControllerProviderInterfa
             }
             $status = true;
             $task = $request->request->all();
-
-            $status = $app['db']->insert('task', $task);
+            try {
+                $app['db']->beginTransaction();
+                $app['db']->insert('task', $task);
+                $taskHistorico = [
+                    'task' => $app['db']->lastInsertId(),
+                    'data' => (new \DateTime())->format(\DateTime::ATOM),
+                    'andamento' => $task['andamento'],
+                ];
+                $app['db']->insert('task_historico', $taskHistorico);
+                $app['db']->commit();
+                $status = true;
+            } catch (\Exception $e) {
+                $app['db']->rollBack();
+                $status = false;
+            }
 
             if(!$status) {
 
@@ -115,13 +128,29 @@ class TaskController extends ControllerConf implements ControllerProviderInterfa
             $taskRequest = $request->request->all();
             $taskRequest['id'] = (int) $taskRequest['id'];
 
-            $status = $app['db']->executeUpdate($sql, [
-                $request->get('nome'),
-                $request->get('descricao'),
-                $request->get('andamento'),
-                $request->get('usuario'),
-                (int) $request->get('id')
-            ]);
+            try {
+                $app['db']->beginTransaction();
+
+                $status = $app['db']->executeUpdate($sql, [
+                    $request->get('nome'),
+                    $request->get('descricao'),
+                    $request->get('andamento'),
+                    $request->get('usuario'),
+                    $request->get('id')
+                ]);
+                $taskHistorico = [
+                    'task' => $taskRequest['id'],
+                    'data' => (new \DateTime())->format(\DateTime::ATOM),
+                    'andamento' => $request->get('andamento')
+                ];
+                $app['db']->insert('task_historico', $taskHistorico);
+                $app['db']->commit();
+                $status = true;
+            } catch (\Exception $e) {
+                $app['db']->rollBack();
+
+                $status = false;
+            }
 
             $this->mensagem($app, $status);
 
