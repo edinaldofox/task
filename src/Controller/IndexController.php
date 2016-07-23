@@ -37,7 +37,7 @@ class IndexController implements ControllerProviderInterface
 
             $usuario = $app['session']->get('user');
 
-            $sql = 'SELECT * FROM task where usuario = ? LIMIT 20';
+            $sql = 'SELECT * FROM task where usuario = ? LIMIT 5';
             $tasks = $app['db']->fetchAll($sql, [$usuario['id']]);
 
             return $app["twig"]->render('Index/minhasTasks.twig', [

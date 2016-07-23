@@ -1,0 +1,31 @@
+{
+  "name": "Task",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Speed Admin",
+  "sails": {
+    "isHook": true
+  },
+  "keywords": [],
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "include-all": "~0.1.6",
+    "rc": "1.0.1"
+  },
+  "bin": {
+    "coveralls": "./bin/coveralls.js"
+  },
+  "main": "app.js",
+  "author": "edinaldo",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-minify": "0.0.11",
+    "gulp-rename": "^1.2.2"
+  },
+  "directories": {
+    "test": "test"
+  }
+}
