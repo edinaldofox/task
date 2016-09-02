@@ -28,7 +28,7 @@ $app
             'host'      => 'localhost',
             'dbname'    => 'time',
             'user'      => 'root',
-            'password'  => '884191',
+            'password'  => '123',
         ),
 ));
 $app->mount('/', new IndexController());
